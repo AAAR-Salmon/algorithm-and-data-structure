@@ -27,41 +27,33 @@
 \begin{frame}{概要}
 \begin{itemize}
     \item 授業ではフォーカスされないデータ構造とアルゴリズムを紹介
-        \begin{itemize}
-            \item バケットソート・基数ソート
-            \item Fenwick Tree
-                \begin{itemize}
-                    \item 一点更新が高速な累積和
-                \end{itemize}
-            \item Warshall-Floyd法
-                \begin{itemize}
-                    \item 重み付き有向グラフの任意二点間最短経路長の計算、不閉路検出
-                \end{itemize}
-        \end{itemize}
     \item 座学形式
         \begin{itemize}
             \item サンプルプログラムは配布
         \end{itemize}
+    \item 今回はバケットソート・基数ソート
 \end{itemize}
 \end{frame}
 
-\section{バケットソートと基数ソート}
+\section{バケットソート}
 \frame{\sectionpage}
 
 \begin{frame}{バケットソート}
 \begin{itemize}
     \item 非比較ソートアルゴリズム（安定ソート）
     \item 配列のランダムアクセス
+    \item 2つバリエーションがある
+        \begin{itemize}
+            \item 計数ソート（これ）
+            \item キューを用いた実装
+        \end{itemize}
     \item ソートする配列の長さ $N$、キーの整数値の範囲 $[0,R)$、要素のサイズ $S$ に対し
         \begin{itemize}
-            \item 時間計算量 $O(N)$
+            \item 時間計算量 $O(N+R)$
                 \begin{itemize}
                     \item これは比較ソートの $O(N \log N)$ と比べて高速
                 \end{itemize}
             \item 空間計算量 $O(NS+R)$
-                \begin{itemize}
-                    \item $R$ が大きすぎる場合は使えない
-                \end{itemize}
         \end{itemize}
 \end{itemize}
 \end{frame}
@@ -142,9 +134,9 @@
             \node<-26>{7}; \node<27>[fill=yellow]{7}; \alt<28>{\node[fill=orange]{8}}{\node<28-32>{8}}; \node<33>[fill=yellow]{8}; \alt<34>{\node[fill=orange]{9}}{\node<34-38>{9}}; \node<39>[fill=yellow]{9}; \alt<40>{\node[fill=orange]{10}}{\node<40->{10}}; \&
             \node<-34>{10}; \node<35>[fill=yellow]{10}; \alt<36>{\node[fill=orange]{11}}{\node<36-46>{11}}; \node<47>[fill=yellow]{11}; \alt<48>{\node[fill=orange]{12}}{\node<48->{12}}; \\
         };
-        \matrix<26->[
+        \matrix<26-50>[
             ampersand replacement=\&
-        ] (sorted) at (0,-3) {
+        ] (sorted0) at (0,-3) {
             \node<-28>{*}; \alt<29>{\node[fill=orange]{0}}{\node<29->{0}}; \&
             \node<-30>{*}; \alt<31>{\node[fill=orange]{0}}{\node<31->{0}}; \&
             \node<-42>{*}; \alt<43>{\node[fill=orange]{1}}{\node<43->{1}}; \&
@@ -166,10 +158,26 @@
             もとの配列を順に走査しながら前の手順で作った配置場所の配列を使って整列 \\
             配置場所配列の使った要素はインクリメント
         };
+        \matrix<51>[matrix of nodes, ampersand replacement=\&, draw=blue] (sorted) at (0,-3) { 0 \& 0 \& 1 \& 1 \& 2 \& 3 \& 4 \& 6 \& 6 \& 6 \& 7 \& 7 \\ };
         \node<51> [align=center] at (0,-4) {
             ソート完了
         };
     \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{バケットソートの長短}
+    \begin{itemize}
+        \item 長所
+            \begin{itemize}
+                \item 極めて高速（時間計算量 $O(N+R)$）
+                \item 実装が単純
+            \end{itemize}
+        \item 短所
+            \begin{itemize}
+                \item 整数しかソートできない
+                \item キーの範囲が広いと使えない
+            \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \end{document}
